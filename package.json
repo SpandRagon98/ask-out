@@ -1,21 +1,32 @@
 {
-  "name": "foodapp",
+  "name": "a-little-something-for-debalina",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "description": "Okay, So I Have a Question. A tiny Sunday plan.",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "tsc -b && vite build && node scripts/spa-fallback.mjs",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {
+    "@fontsource-variable/dm-sans": "^5.1.0",
+    "@fontsource-variable/fraunces": "^5.1.0",
+    "@fontsource/caveat": "^5.1.0",
+    "lucide-react": "^0.460.0",
+    "motion": "^11.18.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.1",
-    "tailwindcss": "^4.1.11",
-    "@tailwindcss/vite": "^4.1.11",
-    "vite": "^5.4.10"
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.6.3",
+    "vite": "^5.4.11"
   }
 }

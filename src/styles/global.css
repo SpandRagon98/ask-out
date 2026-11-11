@@ -1,0 +1,251 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --gutter: max(1.25rem, env(safe-area-inset-left), env(safe-area-inset-right));
+    --app-h: 100vh;
+  }
+  @supports (height: 100dvh) {
+    :root {
+      --app-h: 100dvh;
+    }
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    background: #140e18;
+  }
+
+  body {
+    @apply bg-night font-sans text-cream antialiased;
+    font-optical-sizing: auto;
+  }
+
+  ::selection {
+    background: rgba(229, 143, 160, 0.45);
+    color: #fff4e8;
+  }
+
+  :focus-visible {
+    outline: 2.5px solid #f2c77b;
+    outline-offset: 3px;
+  }
+
+  [data-screen-heading]:focus,
+  [data-screen-heading]:focus-visible {
+    outline: none;
+  }
+
+  button,
+  a,
+  label,
+  input[type='range'] {
+    touch-action: manipulation;
+  }
+}
+
+@layer components {
+  .app-shell {
+    height: var(--app-h);
+    padding-top: var(--safe-top);
+    padding-bottom: var(--safe-bottom);
+  }
+
+  .scene {
+    @apply relative mx-auto flex h-full w-full flex-col;
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
+
+  .glass {
+    @apply border border-white/[0.12] bg-white/[0.06] shadow-glass backdrop-blur-xl;
+  }
+
+  .btn-primary {
+    @apply relative inline-flex min-h-[3.25rem] items-center justify-center gap-2 rounded-full bg-cream px-7 text-[1.02rem] font-semibold text-plum-deep shadow-glow transition-[transform,box-shadow,background-color] duration-200 ease-out;
+    @apply hover:bg-white active:scale-[0.96];
+  }
+  .btn-primary:disabled {
+    @apply cursor-not-allowed bg-cream/25 text-cream/60 shadow-none active:scale-100;
+  }
+
+  .btn-glass {
+    @apply inline-flex min-h-[3rem] items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-5 font-medium text-cream backdrop-blur-md transition-[transform,background-color,border-color] duration-200 hover:border-white/30 hover:bg-white/[0.12] active:scale-[0.96];
+  }
+
+  .btn-link {
+    @apply inline-flex min-h-[2.75rem] items-center justify-center gap-1.5 rounded-full px-3 text-[0.92rem] font-medium text-cream/70 underline decoration-cream/25 underline-offset-4 transition-colors hover:text-cream hover:decoration-cream/60;
+  }
+
+  .eyebrow {
+    @apply text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-gold;
+  }
+
+  .hand {
+    @apply font-hand leading-tight text-peach-soft;
+  }
+
+  .hand-ink {
+    @apply mt-2 block font-hand text-[clamp(1.2rem,min(5vw,3dvh),1.45rem)] leading-tight text-plum-deep/65;
+  }
+
+  .text-glow {
+    background: linear-gradient(100deg, #ffd3b8 0%, #f2b8c2 45%, #f2c77b 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .field {
+    @apply w-full rounded-2xl border border-white/15 bg-white/[0.08] px-4 py-3.5 text-[1rem] text-cream outline-none transition placeholder:text-cream/45 focus:border-gold focus:ring-4 focus:ring-gold/20;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Range slider, styled once for the whole site */
+  .range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2.75rem;
+    background: transparent;
+    cursor: pointer;
+  }
+  .range::-webkit-slider-runnable-track {
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--track, rgba(255, 255, 255, 0.18));
+  }
+  .range::-moz-range-track {
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--track, rgba(255, 255, 255, 0.18));
+  }
+  .range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 2rem;
+    height: 2rem;
+    margin-top: -0.75rem;
+    border-radius: 999px;
+    background: #fff4e8;
+    border: 3px solid var(--thumb, #f2c77b);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45), 0 0 0 6px rgba(255, 244, 232, 0.08);
+    transition: transform 0.15s ease;
+  }
+  .range:active::-webkit-slider-thumb {
+    transform: scale(1.12);
+  }
+  .range::-moz-range-thumb {
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 999px;
+    background: #fff4e8;
+    border: 3px solid var(--thumb, #f2c77b);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+  }
+  .range:focus-visible {
+    outline: none;
+  }
+  .range:focus-visible::-webkit-slider-thumb {
+    outline: 2.5px solid #f2c77b;
+    outline-offset: 3px;
+  }
+}
+
+/* Ambient motion. All of it switches off for reduced-motion users. */
+@keyframes drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(8%, 5%, 0) scale(1.12); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50% { transform: translate3d(-7%, -6%, 0) scale(0.92); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+@keyframes steam {
+  0% { transform: translateY(4px) scaleY(0.9); opacity: 0; }
+  30% { opacity: 0.7; }
+  100% { transform: translateY(-10px) scaleY(1.1); opacity: 0; }
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  20% { transform: translateX(-2px) rotate(-2deg); }
+  40% { transform: translateX(2px) rotate(2deg); }
+  60% { transform: translateX(-2px) rotate(-1deg); }
+  80% { transform: translateX(2px) rotate(1deg); }
+}
+@keyframes flicker {
+  0%, 100% { transform: scale(1) rotate(-2deg); opacity: 0.95; }
+  50% { transform: scale(1.08, 0.94) rotate(2deg); opacity: 1; }
+}
+@keyframes shimmer {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.8; }
+}
+
+.anim-drift-a { animation: drift-a 24s ease-in-out infinite; }
+.anim-drift-b { animation: drift-b 30s ease-in-out infinite; }
+.anim-twinkle { animation: twinkle 3.6s ease-in-out infinite; }
+.anim-spin-slow { animation: spin-slow 80s linear infinite; transform-box: fill-box; transform-origin: center; }
+.anim-steam { animation: steam 2.8s ease-out infinite; transform-box: fill-box; transform-origin: bottom; }
+.anim-bob { animation: bob 5s ease-in-out infinite; }
+.anim-blink { animation: blink 4.5s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.anim-pulse-ring { animation: pulse-ring 2.2s ease-out infinite; }
+.anim-shake { animation: shake 0.35s linear infinite; }
+.anim-flicker { animation: flicker 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: bottom center; }
+.anim-shimmer { animation: shimmer 3.5s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-drift-a,
+  .anim-drift-b,
+  .anim-twinkle,
+  .anim-spin-slow,
+  .anim-steam,
+  .anim-bob,
+  .anim-blink,
+  .anim-pulse-ring,
+  .anim-shake,
+  .anim-flicker,
+  .anim-shimmer {
+    animation: none !important;
+  }
+}
